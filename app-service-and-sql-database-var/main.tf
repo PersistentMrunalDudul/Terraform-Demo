@@ -1,7 +1,6 @@
-provider "azurem"{
-  version="=2.0.0"
-  features {}
-  
+provider "azurerm"{
+  version="=2.4.0"
+  features {}  
   }
 resource "azurerm_resource_group" "RG-Terraform" {
   name     = "terraform-resource-group"
