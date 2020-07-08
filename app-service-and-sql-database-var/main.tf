@@ -20,20 +20,15 @@ resource "influxdb_continuous_query" "minnie" {
 resource "influxdb_user" "paul" {
   name     = "paul"
   password = "super-secret"
-}
-resource "influxdb_database" "green" {
-    name = "terraform-green"
-}
-
-resource "influxdb_user" "paul" {
-    name = "paul"
-    password = "super-secret"
-
     grant {
       database = "${influxdb_database.green.name}"
       privilege = "write"
     }
 }
+resource "influxdb_database" "green" {
+    name = "terraform-green"
+}
+
 resource "azurerm_resource_group" "RG-Terraform" {
   name     = "terraform-resource-group"
   location = "West Europe"
