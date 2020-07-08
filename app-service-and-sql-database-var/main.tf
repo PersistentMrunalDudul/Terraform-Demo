@@ -2,6 +2,38 @@ provider "azurerm"{
   version="=2.4.0"
   features {}  
   }
+provider "influxdb" {
+  url      = "http://influxdb.example.com/"
+  username = "terraform"
+}
+
+resource "influxdb_database" "metrics" {
+  name = "awesome_app"
+}
+
+resource "influxdb_continuous_query" "minnie" {
+  name     = "minnie"
+  database = "${influxdb_database.metrics.name}"
+  query    = "SELECT min(mouse) INTO min_mouse FROM zoo GROUP BY time(30m)"
+}
+
+resource "influxdb_user" "paul" {
+  name     = "paul"
+  password = "super-secret"
+}
+resource "influxdb_database" "green" {
+    name = "terraform-green"
+}
+
+resource "influxdb_user" "paul" {
+    name = "paul"
+    password = "super-secret"
+
+    grant {
+      database = "${influxdb_database.green.name}"
+      privilege = "write"
+    }
+}
 resource "azurerm_resource_group" "RG-Terraform" {
   name     = "terraform-resource-group"
   location = "West Europe"
