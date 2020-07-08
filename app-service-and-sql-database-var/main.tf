@@ -17,17 +17,7 @@ resource "influxdb_continuous_query" "minnie" {
   query    = "SELECT min(mouse) INTO min_mouse FROM zoo GROUP BY time(30m)"
 }
 
-resource "influxdb_user" "paul" {
-  name     = "paul"
-  password = "super-secret"
-    grant {
-      database = "${influxdb_database.green.name}"
-      privilege = "write"
-    }
-}
-resource "influxdb_database" "green" {
-    name = "terraform-green"
-}
+
 
 resource "azurerm_resource_group" "RG-Terraform" {
   name     = "terraform-resource-group"
